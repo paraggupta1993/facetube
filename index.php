@@ -127,6 +127,7 @@ var timeint = 5*24*60*60;
 var psince;
 var plimit;
 var poffset;
+var MAX = 25;
 function gethtml(fb){
 	html = "<ul class='feed_item' id='feed_item" + fb.id + "'>";
 	init = html;
@@ -168,20 +169,27 @@ function getpost(){
 			});
 }
 function isvalidlink(link ){
-	if( link.type == "video"){
+	if( link.type == "video" && is_youtube_url(link.link) ){
 		return true;
 	}
 	return false;
-
+}
+function is_youtube_url(url){
+	var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
+	var match = url.match(regExp);
+	if (match&&match[2].length==11){
+		return true;
+	}else{
+		return false;
+	}
 }
 function youtube_parser(url){
-
 	var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
 	var match = url.match(regExp);
 	if (match&&match[2].length==11){
 		return match[2];
 	}else{
-		alert("Cannot extract");
+		alert("Cannot extract id from link");
 	}
 }
 function getlinkhtml( link ){
@@ -195,7 +203,7 @@ function getlinkhtml( link ){
 function getlinksfromgrouphelper(event){
 		
 		$('#video_links').empty();
-		plimit =25;
+		plimit =MAX;
 		poffset = 0;
 		curr_group = event.target.id;
 		if( typeof playlists[curr_group] == 'undefined' ){
@@ -203,37 +211,59 @@ function getlinksfromgrouphelper(event){
 			playlists[curr_group] = {};
 			playlists[curr_group]['links'] = new Array();
 			playlists[curr_group]['poffset'] = 0;
-			playlists[curr_group]['plimit'] = 25;
+			playlists[curr_group]['plimit'] = MAX;
 		}
 		else{
 			alert("Group already present");
 		}
 		getlinksfromgroup();
 }
-function renderplaylist( group ) {
+var order_by = 
+function orderby(playlist){
+	if( order_by == 'asc'){
+	playlist.sort( function(a,b){
+			
+
+	 });
+	 }
+}
+function renderplaylist( playlist ){
+	//orderby( playlist );
 	$('#video_links').empty();
-	for(i=0;i< group.links.length ;i++){
-		linkhtml = getlinkhtml(   group.links[i] );
+	for(i=0;i< playlist.length ;i++){
+		linkhtml = getlinkhtml(   playlist[i] );
 		$('#video_links').append( linkhtml);
 	}
 }
+
 function getlinksfromgroup(){
-	FB.api('/'+ curr_group +'/feed', { limit: playlists[curr_group][plimit],offset : playlists[curr_group][poffset] }, function(response) {
+	pre_len = playlists[curr_group]['links'].length;
+	FB.api('/'+ curr_group +'/feed', { limit: playlists[curr_group]['plimit'],offset : playlists[curr_group]['poffset'], fields:'id,likes,name,link,type,updated_time' }, function(response) {
 			alert( "Fetched " + response.data.length );
+			if( response.data.length == 0) return ;
 			for (var i=0, l=response.data.length; i<l; i++){
 			var link = response.data[i];
+			console.log(link);
 			if( isvalidlink( link )){
-			var templinkobj = {};
-			templinkobj.name = link.name;
-			templinkobj.link = link.link;
+			  var templinkobj = {};
+			  templinkobj.name = link.name;
+			templinkobj.link = youtube_parser(link.link);
 			templinkobj.id = link.id;
+			templinkobj.time = Date.parse(link.updated_time)/1000;
+			if( typeof link.likes != 'undefined' ) templinkobj.count = link.likes.count;
+			else templinkobj.count = 0;
+			
 
 			playlists[curr_group]['links'].push( templinkobj );
 			}
 			}
-			playlists[curr_group]['poffset'] +=  25;
-			playlists[curr_group]['plimit'] += 25;
-			renderplaylist( playlists[curr_group]);
+			playlists[curr_group]['poffset'] +=  MAX;
+			playlists[curr_group]['plimit'] += MAX;
+			len = playlists[curr_group]['links'].length;
+			if( len - pre_len < 25 ) {
+				getlinksfromgroup();
+			}
+			renderplaylist( playlists[curr_group].links);
 			if( response.error ) alert("error");
 			});
 }
@@ -262,7 +292,7 @@ function displayStatus(){
 }*/
 
 function getgroups(){
-		FB.api('/me/groups', function(groups) {
+		FB.api('/me/groups', {fields:'name,id'} , function(groups) {
 			//alert( "Fetched " + groups.data.length + "groups" );
 			for (var i=0, l=groups.data.length; i<l; i++){
 			var group = groups.data[i];
@@ -276,15 +306,15 @@ function getgroups(){
 function testfql(){
 	FB.api({
 	    method: 'fql.query',
-	        query: 'SELECT name FROM user WHERE uid = me()'
+	        //query: 'SELECT name FROM user WHERE uid = me()'
+	        query: 'SELECT post_id, actor_id, target_id, attachment , message FROM stream WHERE source_id ="327559000672561" LIMIT 50'
 		}, function(response) {
-				console.dir( response );
+				console.log( response );
 			        for(i=0;i<response.length;i++)
 				             {
 						//alert(response[i].name);
 					      }
 				});
-
 }
 
 function displayUser(){
