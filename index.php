@@ -196,6 +196,7 @@ function getlinkhtml( link ){
 	html = "<ul class='link_item' id='link_item" + link.id + "'>";
 	html += (typeof(link.name) != "undefined") ?  "<li>Name: " + link.name + "</li>" : "" ; 
 	html += (typeof(link.link) != "undefined" ) ? "<li>Goto: "+ link.link +"</li>" : "";
+	html += (typeof(link.link) != "undefined" ) ? "<li>likes: "+ link.count +"</li>" : "";
 	html += "</ul>";
 	return html;
 }
@@ -218,17 +219,31 @@ function getlinksfromgrouphelper(event){
 		}
 		getlinksfromgroup();
 }
-var order_by = 
+var order_by = 'least_liked';
 function orderby(playlist){
 	if( order_by == 'asc'){
 	playlist.sort( function(a,b){
-			
-
-	 });
+		return b.time - a.time	;
+	});
 	 }
+	else if( order_by == 'desc'){
+		playlist.sort( function(a,b){
+			return a.time - b.time;
+		});
+	 }
+	else if( order_by == 'most_liked'){
+		playlist.sort( function(a,b){
+			return b.count - a.count;
+		});
+	}
+	else if( order_by == 'least_liked'){
+		playlist.sort( function(a,b){
+			return a.count - b.count;
+		});
+	}
 }
 function renderplaylist( playlist ){
-	//orderby( playlist );
+	orderby( playlist );
 	$('#video_links').empty();
 	for(i=0;i< playlist.length ;i++){
 		linkhtml = getlinkhtml(   playlist[i] );
@@ -239,8 +254,12 @@ function renderplaylist( playlist ){
 function getlinksfromgroup(){
 	pre_len = playlists[curr_group]['links'].length;
 	FB.api('/'+ curr_group +'/feed', { limit: playlists[curr_group]['plimit'],offset : playlists[curr_group]['poffset'], fields:'id,likes,name,link,type,updated_time' }, function(response) {
-			alert( "Fetched " + response.data.length );
-			if( response.data.length == 0) return ;
+			//alert( "Fetched " + response.data.length );
+			if( response.data.length == 0){
+					
+			renderplaylist( playlists[curr_group].links);
+				return ;
+			}
 			for (var i=0, l=response.data.length; i<l; i++){
 			var link = response.data[i];
 			console.log(link);
@@ -329,9 +348,10 @@ function displayUser(){
 	//psince = puntil - (timeint);
 	postToken( );
 	//getpost();
-	testfql();
+	//testfql();
 	getgroups();
 }
+
 
 function fbLoginClicked(){
 	FB.getLoginStatus( fbLoginClickedHelper , true );
