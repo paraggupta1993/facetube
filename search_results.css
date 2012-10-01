@@ -1,0 +1,30 @@
+#right-bar
+{
+	float: right;
+	width: 200px;
+	height: 470px;
+	padding: 20px 20px;
+	margin: 0 20px 0 10px;
+	display: inline;
+	background: url(back.jpg);
+	opacity: 1;
+	overflow: scroll;
+}
+
+#right-bar h3 { margin: 0; }
+
+ul.videos li {
+  float: left;
+  width: 17em;
+  margin-bottom: 1em;
+  cursor:pointer;
+  opacity: 1;
+}
+ul.videos
+{
+	opacity: 1;
+  margin-bottom: 1em;
+  padding-left : 2em;
+  margin-left: 0em;
+  list-style: none;
+}
