@@ -2,7 +2,7 @@
 {
 	float: right;
 	width: 200px;
-	height: 470px;
+	height: 450px;
 	padding: 20px 20px;
 	margin: 0 20px 0 10px;
 	display: inline;

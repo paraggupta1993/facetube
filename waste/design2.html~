@@ -15,14 +15,8 @@
 <link rel="stylesheet" type="text/css" href="search_results.css"> </link>
 <link rel="stylesheet" type="text/css" href="left_groups.css"></link>
 </head>
-
-
-
-
 <body onload="draw();">
 <canvas id="canvas"> canvas element </canvas>
-
-
 <div id="container">
 <div id="header">
 	<h2 id="appname">pOkERfACE..yeah !</h2> 
@@ -35,9 +29,6 @@
 		</ul>
 	</div>
 </div>
-
-
-
 <div id="content-container"></div>
 	<div id="left-bar">
 		<ul>
@@ -81,6 +72,8 @@ $("#group").click(function() {
 		</script>-->
 		</div>	
 		<script type="text/javascript" >
+      var x=document.getElementById("related");
+       alert(x);
        var head= document.getElementById("related");
    var script= document.createElement('script');
    script.type= 'text/javascript';

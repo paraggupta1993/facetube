@@ -38,48 +38,169 @@ var offset = 0;
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" ></script>
 <link rel="stylesheet" type="text/css" href="mystyle.css"/>
+<script src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("swfobject", "2.1");
+</script>
+
+<!-- front -end -->
+<script type="text/javascript" src="search_script.js"></script>
+<script type="text/javascript" src="design.js"></script>
+<script type="text/javascript" src="http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js"></script>
+<link rel="stylesheet" type="text/css" href="design.css"> </link>
+<link rel="stylesheet" type="text/css" href="design2.css"></link>
+<link rel="stylesheet" type="text/css" href="search_results.css"> </link>
+<link rel="stylesheet" type="text/css" href="left_groups.css"></link>
+
+
+<style type="text/css">
+#videoDiv {
+	margin-right: 3px;
+}
+</style>
+
+
+
+
+
+
+
+
+
 </head>
-<body>
+
+
+<body onload="draw();">
+
+<canvas id="canvas"> canvas element </canvas>
+
 <div id="fb-root"></div>
 <script src='http://connect.facebook.net/en_US/all.js#xfbml=1&appId=161649837292249' ></script>
-<H2> Welcome To Facebook Buddy !</H2>
 
+<!--
 <div class="right">
  <fb:like-box href="https://www.facebook.com/dosomesmartwork" width="250" height="250" show_faces="true" stream="false" header="true"></fb:like-box> 
 </div>
+-->
+
 <img src="./images/fb_login.png" id="login"/>
 <img src="./images/fb_logout.png" id="logout" style="display:none" />
 
-
-<div id="directions">
-<H3>
-	Directions for Use of Facebook Buddy:
-</H3>
-<ul>
-	<li> Login with your facebook account to use our Application 'Facetube buddy'</li>	
-</ul>
-
-</div>
 <div id="notification" style="background-color:red">
 </div>
-<div class="right">
+
+
+<!-- Front -->
+<div id="container">
+<div id="header">
+	<h2 id="appname">pOkERfACE..yeah !</h2> 
+	<div id="navigation">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Download</a></li>
+			<li><a href="#">Contact us</a></li>
+		</ul>
+	</div>
+</div>
+
+<div id="content-container"></div>
+	<div id="left-bar">
+		<div id="video_links"></div>
+		<div id="user_groups"></div>
+		<div id="moreBtn"></div>
+	</div>
+
+	<div id="player">
+		<h2>Youtube pLAYer</h2>
+		<div id="playerContainer" style="width: 20em; height: 250px; float: left;">
+    			<object id="youtube-player" style="float:left;"></object>
+		</div>
+		<div id="playist">
+			<ul>
+				<li id="song"> song1</li>
+				<li id="song"> song2</li>
+
+			</ul>		
+		</div>
+	</div>	
+	
+	<!-- <div id="right-bar">
+		<h3>search results for the playing video</h3>
+		<div id="related">
+		<div id="videos2"></div>
+	-->	<!--<script 
+   		 type="text/javascript" 
+    		src="http://gdata.youtube.com/feeds/api/videos/PqFMFVcCZgI/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";>
+		</script>-->
+	<!--		</div>	
+		<script type="text/javascript" >
+       var head= document.getElementById("related");
+   var script= document.createElement('script');
+   script.type= 'text/javascript';
+   var id="PqFMFVcCZgI";
+   script.src= "http://gdata.youtube.com/feeds/api/videos/"+id+"/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";
+   head.appendChild(script);
+</script>
+	</div>	
+ 	-->
+</div>
 
 </div>
+
+
 <div id="facebook-friends"></div>
-<div id="video_links"></div>
 <div id="user_groups"></div>
 <div id="user_posts"></div>
-<div id="moreBtn"></div>
+
+<!-- Playlist/youtube -->
+<div id="videoDiv">Loading...</div>
+
+
+<div id="yes"></div>
+<h4>Video list</h4>
+<div id="output"></div>
+
+<h4>User playlist</h4>
+<div id="newplaylist"></div>
+
+
+
 
 <div id="footer">
-
-<!-- <a href="terms.html">Terms and conditions</a> -->
-<H3>HITs: <?php echo $hits ?> </H3>
+<!-- <a href="terms.html">Terms and conditions</a> 
+<H3>HITs: <?php echo $hits ?> </H3> -->
 </div>
 
 <!-- Javascript Functions -->
 
 <script type="text/javascript">
+function loadVideo(event) {
+	$("#yes").before("<div id='videoDiv'>hello world</div>");
+		swfobject.removeSWF("ytPlayer");
+	var params = { allowScriptAccess: "always" };
+	var atts = { id: "ytPlayer" };
+        var videoID=event.target.id;
+	// All of /the magic handled by SWFObject (http://code.google.com/p/swfobject/)
+	swfobject.embedSWF("http://www.youtube.com/v/" + videoID +
+			"?version=3&enablejsapi=1&playerapiid=player1",
+			"videoDiv", "480", "295", "9", null, null, params, atts);
+			}
+
+var store1="";
+function addVideo(event){
+	customplay.push({name: event.target.title, id:event.target.id});
+        //document.getElementById("newplaylist").innerHTML = customplay[0].id;	
+	//for(i=0;i<customplay.length;i++)
+	store1=store1+"<li class='links1' title="+event.target.title+" id="+event.target.id+" >"+event.target.title+"</li>"+"<b id="+event.target.id+" class='remove'>Remove</b>"+ "<br><br>";
+	//alert("reached");
+	document.getElementById("newplaylist").innerHTML = store1;
+	$('.links1').click(loadVideo);
+	//$('.remove').click(removevideo);
+			}
+
+
+
 FB.init({
 appId      : '161649837292249', // App ID
 oauth :true,
@@ -89,7 +210,7 @@ xfbml      : true // parse XFBML
 
 var curr_group;
 var playlists = {};
-
+var customplay = new Array();
 $('#login').bind('click', fbLoginClicked );
 $('#logout').bind('click',fbLogoutClicked);
 FB.Event.subscribe("auth.logout",handleSessionResponse );
@@ -108,7 +229,6 @@ function processAutoLike(event){
 				//alert(data);
 				$('#notification').empty();
 				$('#notification').append('<p> Notification: '+ data );
-				
 			});
 }
 
@@ -194,9 +314,11 @@ function youtube_parser(url){
 }
 function getlinkhtml( link ){
 	html = "<ul class='link_item' id='link_item" + link.id + "'>";
-	html += (typeof(link.name) != "undefined") ?  "<li>Name: " + link.name + "</li>" : "" ; 
-	html += (typeof(link.link) != "undefined" ) ? "<li>Goto: "+ link.link +"</li>" : "";
-	html += (typeof(link.link) != "undefined" ) ? "<li>likes: "+ link.count +"</li>" : "";
+	html += "<li class='links' id="+link.link +">Name: " + link.name + "</li>"; 
+
+	html += "<b title="+link.name+" id="+link.link+" class='add'>Add</b>";
+	html += "<li>Goto: "+ link.link +"</li>";
+	html += "<li>likes: "+ link.count +"</li>";
 	html += "</ul>";
 	return html;
 }
@@ -248,7 +370,10 @@ function renderplaylist( playlist ){
 	for(i=0;i< playlist.length ;i++){
 		linkhtml = getlinkhtml(   playlist[i] );
 		$('#video_links').append( linkhtml);
+
 	}
+	$('.links').click(loadVideo);
+	$('.add').click(addVideo);
 }
 
 function getlinksfromgroup(){
@@ -338,12 +463,11 @@ function testfql(){
 
 function displayUser(){
 	//postlink();
-	$('#user_posts').append('<H4>Stories from your timeline </H4>');
 	$('#moreBtn').append('<a href="#" id="next"> More </a>');
 	$('#next').click( function(){ 
 			//getpost();
 			getlinksfromgroup();
-			});
+	});
 	//puntil = Math.round((new Date()).getTime() / 1000);
 	//psince = puntil - (timeint);
 	postToken( );
