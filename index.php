@@ -7,6 +7,28 @@ require_once('libs/facebook.php');
 <!DOCTYPE html>
 <html xmlns:fb="http://ogp.me/ns/fb#" lang="en">
 <head>
+<!--
+Facetube_Buddy : It enhances youtube lover's experience from facebook
+Copyright (C) 2012  Parag Gupta, Yashasvi Girdhar , Mohit Agarwal
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+-->
+
+
+
+
 <meta charset="utf-8" />
 
 <title><?php echo he($app_name); ?></title>
@@ -47,10 +69,11 @@ google.load("swfobject", "2.1");
 <script type="text/javascript" src="search_script.js"></script>
 <script type="text/javascript" src="design.js"></script>
 <script type="text/javascript" src="http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js"></script>
-<link rel="stylesheet" type="text/css" href="design.css"> </link>
-<link rel="stylesheet" type="text/css" href="design2.css"></link>
+<link rel="stylesheet" type="text/css" href="header.css"> </link>
+<link rel="stylesheet" type="text/css" href="canvas.css"></link>
 <link rel="stylesheet" type="text/css" href="search_results.css"> </link>
 <link rel="stylesheet" type="text/css" href="left_groups.css"></link>
+<link rel="stylesheet" type="text/css" href="player_playist.css"></link>
 
 
 <style type="text/css">
@@ -62,16 +85,13 @@ google.load("swfobject", "2.1");
 
 
 
-
-
-
-
-
 </head>
 
 
 <body onload="draw();">
-
+<script> 
+var store1="";
+</script>
 <canvas id="canvas"> canvas element </canvas>
 
 <div id="fb-root"></div>
@@ -93,15 +113,7 @@ google.load("swfobject", "2.1");
 <!-- Front -->
 <div id="container">
 <div id="header">
-	<h2 id="appname">pOkERfACE..yeah !</h2> 
-	<div id="navigation">
-		<ul>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Download</a></li>
-			<li><a href="#">Contact us</a></li>
-		</ul>
-	</div>
+	<h2 id="appname">Facebook Buddy!</h2> 
 </div>
 
 <div id="content-container"></div>
@@ -113,37 +125,41 @@ google.load("swfobject", "2.1");
 
 	<div id="player">
 		<h2>Youtube pLAYer</h2>
-		<div id="playerContainer" style="width: 20em; height: 250px; float: left;">
-    			<object id="youtube-player" style="float:left;"></object>
+		<div id="playerContainer" style="width: 350px; height: 200px;">
+    			<object id="youtube-player" style="align:center;"></object>
 		</div>
-		<div id="playist">
-			<ul>
-				<li id="song"> song1</li>
-				<li id="song"> song2</li>
-
-			</ul>		
-		</div>
-	</div>	
+	</div>
 	
-	<!-- <div id="right-bar">
-		<h3>search results for the playing video</h3>
+	<div id="playist">
+			<ul id="custom-video">
+			</ul>	
+	</div>
+
+	<div id="right-bar">
+		<h4>rELATED rESULTS</h4>
 		<div id="related">
 		<div id="videos2"></div>
-	-->	<!--<script 
-   		 type="text/javascript" 
-    		src="http://gdata.youtube.com/feeds/api/videos/PqFMFVcCZgI/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";>
-		</script>-->
-	<!--		</div>	
+		</div>	
 		<script type="text/javascript" >
-       var head= document.getElementById("related");
-   var script= document.createElement('script');
-   script.type= 'text/javascript';
-   var id="PqFMFVcCZgI";
-   script.src= "http://gdata.youtube.com/feeds/api/videos/"+id+"/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";
-   head.appendChild(script);
-</script>
+			var head= document.getElementById("related");
+   		 var script= document.createElement('script');
+   		 script.type= 'text/javascript';
+   	    id="PqFMFVcCZgI";
+   	    script.src= "http://gdata.youtube.com/feeds/api/videos/"+id+"/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";
+   		 head.appendChild(script);
+		  
+		  function search(){      	 
+      	 var head= document.getElementById("related");
+   		 var script= document.createElement('script');
+   		 script.type= 'text/javascript';
+   	    script.src= "http://gdata.youtube.com/feeds/api/videos/"+id+"/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";
+   		 head.appendChild(script);
+
+	document.getElementById("custom-video").innerHTML = store1;
+   		 }
+		</script>
 	</div>	
- 	-->
+
 </div>
 
 </div>
@@ -154,6 +170,7 @@ google.load("swfobject", "2.1");
 <div id="user_posts"></div>
 
 <!-- Playlist/youtube -->
+<!--
 <div id="videoDiv">Loading...</div>
 
 
@@ -163,18 +180,20 @@ google.load("swfobject", "2.1");
 
 <h4>User playlist</h4>
 <div id="newplaylist"></div>
+-->
 
 
-
-
+<!--
 <div id="footer">
-<!-- <a href="terms.html">Terms and conditions</a> 
-<H3>HITs: <?php echo $hits ?> </H3> -->
+ <a href="terms.html">Terms and conditions</a> 
+<H3>HITs: <?php echo $hits ?> </H3> 
 </div>
+-->
 
 <!-- Javascript Functions -->
 
 <script type="text/javascript">
+/*
 function loadVideo(event) {
 	$("#yes").before("<div id='videoDiv'>hello world</div>");
 		swfobject.removeSWF("ytPlayer");
@@ -186,18 +205,27 @@ function loadVideo(event) {
 			"?version=3&enablejsapi=1&playerapiid=player1",
 			"videoDiv", "480", "295", "9", null, null, params, atts);
 			}
-
-var store1="";
+			*/
 function addVideo(event){
+	var k;
+	for ( k=0;k<customplay.length;k++){
+  		if( customplay[k].id == event.target.id ){
+			alert("Video already present in custom playlist");
+			return;
+		}
+	}		
+
 	customplay.push({name: event.target.title, id:event.target.id});
         //document.getElementById("newplaylist").innerHTML = customplay[0].id;	
 	//for(i=0;i<customplay.length;i++)
-	store1=store1+"<li class='links1' title="+event.target.title+" id="+event.target.id+" >"+event.target.title+"</li>"+"<b id="+event.target.id+" class='remove'>Remove</b>"+ "<br><br>";
+		store1 = store1+ '<li id="playvideo"' + 'onclick=loadVideo("http://www.youtube.com/v/'+event.target.id +  '?version=3&f=related&app=youtube_gdata",true)>'+ event.target.title  ;
+		store1 = store1 + "<img src='http://img.youtube.com/vi/" +  event.target.id +"/1.jpg'></img></li>";
+	//store1=store1+"<li class='links1' id='playvideo' title="+event.target.title+" id="+event.target.id+" >"+event.target.title+"</li>"+"<b id="+event.target.id+" class='remove'>Remove</b>"+ "<br><br>";
 	//alert("reached");
-	document.getElementById("newplaylist").innerHTML = store1;
-	$('.links1').click(loadVideo);
+	document.getElementById("custom-video").innerHTML = store1;
+	//$('.links1').click(loadVideo);
 	//$('.remove').click(removevideo);
-			}
+}
 
 
 
@@ -217,76 +245,19 @@ FB.Event.subscribe("auth.logout",handleSessionResponse );
 FB.Event.subscribe("auth.login",handleSessionResponse);
 FB.getLoginStatus(handleSessionResponse);
 
-function processAutoLike(event){
-	user = window.user_credentials.authResponse;
-
-	var id = '#feed_item' + event.target.id;
-	$(id).hide();
-
-	$.post('autolike.php',
-			{user_id: user.userID , item_id: event.target.id },
-			function(data){
-				//alert(data);
-				$('#notification').empty();
-				$('#notification').append('<p> Notification: '+ data );
-			});
-}
-
-function postToken(){
-	user = window.user_credentials.authResponse;
-	//alert(user.accessToken);
-	$.post('autolike.php',
-			{user_id: user.userID , token: user.accessToken },
-			function(data){
-				$('#notification').empty();
-				$('#notification').append('<p> Notification: '+ data );
-	});
-}
 var puntil;
 var timeint = 5*24*60*60;
 var psince;
 var plimit;
 var poffset;
 var MAX = 25;
-function gethtml(fb){
-	html = "<ul class='feed_item' id='feed_item" + fb.id + "'>";
-	init = html;
-
-	//if( fb.type == "status" || fb.type == "link"){
-	html += (typeof(fb.story) != "undefined") ?  "<li>Story: " + fb.story + "</li>" : "" ; 
-	html += (typeof(fb.message) != "undefined" ) ? "<li>Message: "+fb.message+"</li>" : "";
-	html += (typeof(fb.link) != "undefined" && typeof(fb.name)!="undefined") ? '<li><a href="' + fb.link + '" class="fb_link" target="_blank">'+fb.name+'</a></li>': "";
-
-
-
-	if( html != init){
-		html += "<button class='auto_liker_btn' id='"+ fb.id +"'> Get Likes ! </button>";
-	}
-	//}
-	html += "</ul>";
-	return html;
-}
 function getgrouphtml( group ){
 	html = "<ul class='group_item' id='group_item" + group.id + "'>";
-	html += "<li>Name: " + group.name + "</li>"; 
-	html += "<li>Id:  <a href='#' class='group_id' id='" + group.id + "'>"+  group.id +"</a></li>";
+	//html += "<li>Name: " + group.name + "</li>"; 
+	//html += "<li>Id:  <a href='#' class='group_id' id='" + group.id + "'>"+  group.id +"</a></li>";
+	html += "<li><a href='#' class='group_id' id='" + group.id + "'>"+ group.name + "</a></li>"; 
 	html += "</ul>";
 	return html;
-}
-function getpost(){
-	//alert( puntil+ " " + psince+ " ");
-	FB.api('/me/feed', { since : psince, until : puntil  }, function(response) {
-			alert( "Fetched " + response.data.length + "more stories." );
-			for (var i=0, l=response.data.length; i<l; i++){
-			var fb = response.data[i];
-			html = gethtml( fb );
-			$('#user_posts').append(html);
-			}
-			$('.auto_liker_btn').click(processAutoLike);
-			puntil = psince;
-			psince = psince - (timeint);
-			if( response.error ) alert("error");
-			});
 }
 function isvalidlink(link ){
 	if( link.type == "video" && is_youtube_url(link.link) ){
@@ -314,11 +285,10 @@ function youtube_parser(url){
 }
 function getlinkhtml( link ){
 	html = "<ul class='link_item' id='link_item" + link.id + "'>";
-	html += "<li class='links' id="+link.link +">Name: " + link.name + "</li>"; 
 
-	html += "<b title="+link.name+" id="+link.link+" class='add'>Add</b>";
-	html += "<li>Goto: "+ link.link +"</li>";
-	html += "<li>likes: "+ link.count +"</li>";
+	html += "<a href='#' title="+link.name+" id="+link.link+" class='add'>Add&nbsp</a>";
+	html += "<span class='links' id="+link.link +  ">" + link.name + "</span>"; 
+	
 	html += "</ul>";
 	return html;
 }
@@ -330,14 +300,14 @@ function getlinksfromgrouphelper(event){
 		poffset = 0;
 		curr_group = event.target.id;
 		if( typeof playlists[curr_group] == 'undefined' ){
-			alert("new group created");
+		
 			playlists[curr_group] = {};
 			playlists[curr_group]['links'] = new Array();
 			playlists[curr_group]['poffset'] = 0;
 			playlists[curr_group]['plimit'] = MAX;
 		}
 		else{
-			alert("Group already present");
+
 		}
 		getlinksfromgroup();
 }
@@ -380,7 +350,7 @@ function getlinksfromgroup(){
 	pre_len = playlists[curr_group]['links'].length;
 	FB.api('/'+ curr_group +'/feed', { limit: playlists[curr_group]['plimit'],offset : playlists[curr_group]['poffset'], fields:'id,likes,name,link,type,updated_time' }, function(response) {
 			//alert( "Fetched " + response.data.length );
-			if( response.data.length == 0){
+			if( typeof response.data == 'undefined' || response.data.length == 0){
 					
 			renderplaylist( playlists[curr_group].links);
 				return ;
@@ -414,51 +384,27 @@ function getlinksfromgroup(){
 
 function postlink(){
 	FB.api('/me/feed', 'post', {
-	message: "Auto-liker for fb !! keep getting ur friend's like on ur status.",
-	link : "http://smartfbing.phpfogapp.com"
+	message: "Enhance your youtube experience from your facebook",
+	link : "http://web.iiit.ac.in/~parag.gupta/facetube/"
 	}, function(response) {
 	  if (!response || response.error) {
 	        } else {
 		      }
 	 });
 }
-/*
-function displayStatus(){
-	$.post('autolike.php',
-		{user_id: user.userID },
-			function(data){
-				//alert(data);
-				$('#notification').empty();
-				$('#notification').append('<p> Notification: '+ data );
-				
-			});
-
-}*/
 
 function getgroups(){
 		FB.api('/me/groups', {fields:'name,id'} , function(groups) {
-			//alert( "Fetched " + groups.data.length + "groups" );
+			if( groups.error ) alert("error");
+			$('#user_groups').append("<H4> Your Fb Groups</H4>");
+
 			for (var i=0, l=groups.data.length; i<l; i++){
 			var group = groups.data[i];
 			grouphtml = getgrouphtml( group );
 			$('#user_groups').append(grouphtml);
 			}
 			$('.group_id').click( getlinksfromgrouphelper );
-			if( groups.error ) alert("error");
 			});
-}
-function testfql(){
-	FB.api({
-	    method: 'fql.query',
-	        //query: 'SELECT name FROM user WHERE uid = me()'
-	        query: 'SELECT post_id, actor_id, target_id, attachment , message FROM stream WHERE source_id ="327559000672561" LIMIT 50'
-		}, function(response) {
-				console.log( response );
-			        for(i=0;i<response.length;i++)
-				             {
-						//alert(response[i].name);
-					      }
-				});
 }
 
 function displayUser(){
@@ -470,9 +416,7 @@ function displayUser(){
 	});
 	//puntil = Math.round((new Date()).getTime() / 1000);
 	//psince = puntil - (timeint);
-	postToken( );
-	//getpost();
-	//testfql();
+	//postToken( );
 	getgroups();
 }
 
@@ -548,6 +492,8 @@ function handleSessionResponse(response) {
 // no user, clear display
 function clearDisplay() {
 	$('#user_posts').empty();
+	$('#user_groups').empty();
+	$('#video_links').empty();
 }
 </script>
 </body>

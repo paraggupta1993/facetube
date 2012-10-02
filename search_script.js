@@ -13,16 +13,22 @@ function showMyVideos2(data) {
   }
   html.push('</ul><br style="clear: left;"/>');
   document.getElementById('videos2').innerHTML = html.join('');
-  if (entries.length > 0) {
-    loadVideo(entries[0].media$group.media$content[0].url, false);
-  }
+ 
 }
-
+var id;var load=0;var search=0;
 function loadVideo(playerUrl, autoplay) {
+		//load=1;search=0;
   swfobject.embedSWF(
       playerUrl + '&rel=1&border=2&fs=1&autoplay=' + 
-      (autoplay?1:0), 'player', '350', '300', '9.0.0', false, 
+      (autoplay?1:0), 'player', '350', '250', '9.0.0', false, 
       false, {allowfullscreen: 'true'});
+     // alert(playerUrl);
+      var begin=playerUrl.indexOf("v")+2;
+      var end=playerUrl.indexOf("?");
+      id=playerUrl.slice(begin,end);
+      //alert(playerUrl+'  '+id)
+      //if(search==0)
+      search();
 }
 
 

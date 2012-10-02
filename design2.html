@@ -8,86 +8,77 @@
 
 
 <script type="text/javascript" src="search_script.js"></script>
+<script type="text/javascript" src="groups.js"></script>
 <script type="text/javascript" src="design.js"></script>
 <script type="text/javascript" src="http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js"></script>
-<link rel="stylesheet" type="text/css" href="design.css"> </link>
-<link rel="stylesheet" type="text/css" href="design2.css"></link>
+<link rel="stylesheet" type="text/css" href="header.css"> </link>
+<link rel="stylesheet" type="text/css" href="canvas.css"></link>
 <link rel="stylesheet" type="text/css" href="search_results.css"> </link>
 <link rel="stylesheet" type="text/css" href="left_groups.css"></link>
+<link rel="stylesheet" type="text/css" href="player_playist.css"></link>
 </head>
-
-
-
-
 <body onload="draw();">
 <canvas id="canvas"> canvas element </canvas>
-
-
 <div id="container">
 <div id="header">
-	<h2 id="appname">pOkERfACE..yeah !</h2> 
-	<div id="navigation">
-		<ul>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Download</a></li>
-			<li><a href="#">Contact us</a></li>
-		</ul>
-	</div>
+	<h1 id="appname">pOkERfACE</h1> 
 </div>
-
-
-
 <div id="content-container"></div>
 	<div id="left-bar">
 		<ul>
-			<li id="group">group1</li>
-			<li id="group">group2</li>
-			<li id="group">group3</li>
+			<li id="group"><h2>group1</h2></li>
+			<li id="group"><h2>group2</h2></li>
+			<li id="group"><h2>group3</h2></li>
 		</ul>
-		<ol id="videoslist">
-					<li id="video">1st video</li>
-					<li id="video">2nd video</li>				
-		</ol>	
-		<script>
-
-$("#group").click(function() {
-     alert("Hello world!");
-   });
-
-</script>
 	</div>
 
 	<div id="player">
+	<center>
 		<h2>Youtube pLAYer</h2>
-		<div id="playerContainer" style="width: 20em; height: 250px; float: left;">
-    			<object id="youtube-player" style="float:left;"></object>
+		<div id="playerContainer" style="width: 350px; height: 200px;">
+    			<object id="youtube-player" style="align:center;"></object>
 		</div>
+		</center>
 		<div id="playist">
-			<ul>
-				<li id="song"> song1</li>
-				<li id="song"> song2</li>			
-			</ul>		
+			<ul id="custom-video">
+				<li id="playvideo" onclick="loadVideo('http://www.youtube.com/v/TvOhznONB9Y?version=3&f=related&app=youtube_gdata',true)"> song1
+				<img src="http://img.youtube.com/vi/TvOhznONB9Y/1.jpg"></img>	</li>
+				<li id="playvideo" onclick="loadVideo('http://www.youtube.com/v/8HDUPnMbZzE?version=3&f=related&app=youtube_gdata',true)"> song2		
+				<img src="http://img.youtube.com/vi/8HDUPnMbZzE/1.jpg"></img>	</li>		
+				<li id="playvideo" onclick="loadVideo('http://www.youtube.com/v/Y7G-tYRzwYY?version=3&f=related&app=youtube_gdata',true)"> song3	
+				<img src="http://img.youtube.com/vi/Y7G-tYRzwYY/1.jpg"></img>	</li>		
+				<li id="playvideo" onclick="loadVideo('http://www.youtube.com/v/ylLzyHk54Z0?version=3&f=related&app=youtube_gdata',true)"> song4		
+				<img src="http://img.youtube.com/vi/ylLzyHk54Z0/1.jpg"></img>	</li>		
+				<li id="playvideo" onclick="loadVideo('http://www.youtube.com/v/1FJ9hTNLK4w?version=3&f=related&app=youtube_gdata',true)"> song5		
+				<img src="http://img.youtube.com/vi/1FJ9hTNLK4w/1.jpg"></img>	</li>		
+				<li id="playvideo" onclick="loadVideo('http://www.youtube.com/v/GMUlhuTkM3w?version=3&f=related&app=youtube_gdata',true)"> song6		
+				<img src="http://img.youtube.com/vi/GMUlhuTkM3w/1.jpg"></img>	</li>		
+				
+			</ul>	
 		</div>
 	</div>	
 	
 	<div id="right-bar">
-		<h3>search results for the playing video</h3>
+		<h4>rELATED rESULTS</h4>
 		<div id="related">
 		<div id="videos2"></div>
-		<!--<script 
-   		 type="text/javascript" 
-    		src="http://gdata.youtube.com/feeds/api/videos/PqFMFVcCZgI/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";>
-		</script>-->
 		</div>	
 		<script type="text/javascript" >
-       var head= document.getElementById("related");
-   var script= document.createElement('script');
-   script.type= 'text/javascript';
-   var id="PqFMFVcCZgI";
-   script.src= "http://gdata.youtube.com/feeds/api/videos/"+id+"/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";
-   head.appendChild(script);
-</script>
+			var head= document.getElementById("related");
+   		 var script= document.createElement('script');
+   		 script.type= 'text/javascript';
+   	    id="PqFMFVcCZgI";
+   	    script.src= "http://gdata.youtube.com/feeds/api/videos/"+id+"/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";
+   		 head.appendChild(script);
+		  
+		  function search(){      	 
+      	 var head= document.getElementById("related");
+   		 var script= document.createElement('script');
+   		 script.type= 'text/javascript';
+   	    script.src= "http://gdata.youtube.com/feeds/api/videos/"+id+"/related?alt=json-in-script&callback=showMyVideos2&max-results=20&format=5";
+   		 head.appendChild(script);
+   		 }
+		</script>
 	</div>	
 
 </div>

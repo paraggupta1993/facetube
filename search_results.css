@@ -1,30 +1,28 @@
 #right-bar
 {
 	float: right;
-	width: 200px;
-	height: 470px;
-	padding: 20px 20px;
-	margin: 0 20px 0 10px;
+	width: 170px;
+	height: 500px;
+	padding: 0;
+	margin: 0;
 	display: inline;
-	background: url(back.jpg);
-	opacity: 1;
+	background-color: black;
+	opacity: 0.7;
 	overflow: scroll;
+	color: white;
 }
 
-#right-bar h3 { margin: 0; }
+#right-bar h4 { margin: 0 0 0.7em; }
 
-ul.videos li {
-  float: left;
-  width: 17em;
-  margin-bottom: 1em;
+ul.videos li,img {
   cursor:pointer;
   opacity: 1;
 }
 ul.videos
 {
-	opacity: 1;
-  margin-bottom: 1em;
-  padding-left : 2em;
+  opacity: 1;
+  margin: 0em;
+  padding: 0em;
   margin-left: 0em;
   list-style: none;
 }

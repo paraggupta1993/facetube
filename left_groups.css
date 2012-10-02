@@ -1,13 +1,17 @@
 #left-bar
 {
-	opacity: 1;
+	background:black;
+	opacity: 0.7;
+	color:white;
 	border: 3px;
-	height: 370px;
+	height: 500px;
 	float: left;
-	width: 400px;
+	width: 430px;
 	padding: 0;
-	margin: 0 20px;
+	margin-bottom: 0;
+	margin-right: 50px;
 	display: inline;
+	overflow:scroll;
 }
 
 #left-bar ul
@@ -18,7 +22,7 @@
 
 #left-bar ul li
 {
-	margin: 0 0 1em;
+	margin: 0 0.5em 1em;
 	padding: 0;
 	list-style-type: none;
 }
@@ -37,8 +41,8 @@
 }
 
 #videoslist{
-	display: none;
-	/*-moz-transition-property: display;
+	/*display: none;
+	-moz-transition-property: display;
 	-moz-transition-duration: 1.3s;
 	-moz-transition-timing-function: ease-in-out;
 	-moz-transition-delay: 0.3s;*/

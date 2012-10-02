@@ -1,0 +1,138 @@
+Facetube_Buddy : It enhances youtube lover's experience from facebook
+
+GPL License : 
+
+Copyright (C) 2012  Parag Gupta, Yashasvi Girdhar , Mohit Agarwal
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+
+
+
+What it does ?
+==> It takes youtube videos posted on your facebook groups at one place, where you can custom build your playlist from different groups and you do not need to go and click each and every video to listen to it.
+
+How to Use ?
+==> 
+1. Login with your facebook account.
+2. All groups of which you are a member of will be displayed.
+3. Click on any group to fetch youtube videos posted on that group.
+4. You can select any video, and add it to your custom playlist.
+5. You can order the group playlist according to most recently posted, least recently posted , most liked on facebook , least liked on facebook.
+6. Initially few videos will be displayed, you can fetch more by clicking "More".
+5. Now, you can select any other group, fetch its videos , add videos to your custom playlist.
+6. Enjoy playing your custom playlist.
+7. Log-out when done.
+
+
+Requirements : 
+1. Need Webserver to host.
+2. PHP5
+3. Facebook account.
+4. jquery version 1.7.2
+5. Flash Player Plugin
+
+Installation : 
+
+Just put all the files in a directory of your webserver which is configured for hosting. And access the it thorough URL.
+
+Documentation of index.php:
+
+Requires :
+1. 'AppInfo.php'
+2. 'utils.php'
+3. 'libs/facebook.php'
+
+
+<!-- Javascript Functions -->
+
+function loadVideo(event) {
+	It loads any video in youtube player.
+			}
+
+function addVideo(event){
+	It adds video links from different playlist into your custom playlist.
+			}
+
+function getgrouphtml( group ){
+	return html for a particular group from group data fetched from facebook.
+}
+function isvalidlink(link ){
+	checks whether a link is video and is a youtube video or not.
+	calls is_youtube_url
+}
+function is_youtube_url(url){
+	check whether a url is youtube url.
+}
+function youtube_parser(url){
+	returns youtube video id from a url
+}
+function getlinkhtml( link ){
+	returns html for a particular link/feed from link data fetch from facebook.
+}
+
+function getlinksfromgrouphelper(event){
+	
+	runs whenever a group is clicked.
+	It checks whether playlist of a group exists or not.
+	If latter, it initializes its playlist.
+}
+function orderby(playlist){
+	order a playlist on basis of ascending, descending , most_liked on facebook , least_liked on facebook.
+}
+function renderplaylist( playlist ){
+	render a playlist into html on web page.
+}
+
+function getlinksfromgroup(){
+	it gets feed/links from a facebook group.
+}
+
+
+function getgroups(){
+	it gets all facebook groups to which current logged in user is a member of.
+}
+
+function displayUser(){
+	init function after user is logged in from facebook.
+}
+
+
+function fbLoginClicked(){
+	does facebook login.
+}
+function fbLoginClickedHelper(response){
+	helper function.
+}
+
+function fbLogoutClicked(){
+	does facebook logout.
+
+}
+function afterLoggedOut(){
+	init after facebook logout.
+	re-parse all facebook related stuff to update it.
+}
+function afterLoggedIn(response){
+	init after facebook login.
+	re-parse all facebook related stuff to update it.
+}
+
+function handleSessionResponse(response) {
+	handle facebook session response.
+}
+function clearDisplay() {
+	clear screen after logout.
+}
+
