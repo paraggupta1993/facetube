@@ -2,8 +2,6 @@
 require_once('AppInfo.php');
 require_once('utils.php');
 require_once('libs/facebook.php');
-require_once('essential.php');
-
 ?>
 <!DOCTYPE html>
 <html xmlns:fb="http://ogp.me/ns/fb#" lang="en">
@@ -27,7 +25,7 @@ require_once('essential.php');
 <meta property="fb:app_id" content="<?php echo AppInfo::appID(); ?>" />
 
 <script> 
-APPID = '161649837292249';
+APPID = '344430438958891';
 var user_credentials;
 var login = 0;
 var didFbLogin = 0;
@@ -38,65 +36,66 @@ var offset = 0;
 
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" ></script>
-<link rel="stylesheet" type="text/css" href="mystyle.css"/>
+<link rel=
 </head>
 <body>
 <div id="fb-root"></div>
-<script src='http://connect.facebook.net/en_US/all.js#xfbml=1&appId=161649837292249' ></script>
-<H2> Welcome To Smart-FBing's Facebook Buddy !</H2>
+<script src='http://connect.facebook.net/en_US/all.js#xfbml=1&appId=344430438958891' ></script>
 
-<div class="right">
- <fb:like-box href="https://www.facebook.com/dosomesmartwork" width="250" height="250" show_faces="true" stream="false" header="true"></fb:like-box> 
-</div>
+<H2> Welcome To Smart-FBing's Autolikes generator !</H2>
+
 <img src="./images/fb_login.png" id="login"/>
 <img src="./images/fb_logout.png" id="logout" style="display:none" />
 
-
+<table>
+<tr>
+<td>
 <div id="directions">
 <H3>
-	Directions for Use of Facebook Buddy:
+	Directions for Use of Auto-like generator:
 </H3>
 <ul>
-	<li> Login with your facebook account to use our Application 'Facetube buddy'</li>	
+	<li> Login with your facebook account to use our Application 'SmartFBing'</li>	
+	<li> Some Recent Stories from your timeline will appear before you. </li>
+	<li> Click on any Story that you want "AutoLikes" for. </li>
+	<li> Sorry, But That's all you have to do for AutoLikes :D </li>
+</ul>
+<H4> More tips </H4>
+<ul>
+	<li> You can dig more in your timeline with the "More" button (after Login)</li>
+	<li> It is not a ont time "get-likes" feature. Autolikes enabled posts will receive likes continuously in future. </li>
+	<li> The more users comes to our site, the more likes you'll get on your status. So, help yourself by advertising the site. </li>
 </ul>
 
 </div>
-<div id="notification" style="background-color:red">
-</div>
-<div class="right">
-
-</div>
-<div id="facebook-friends"></div>
-<div id="video_links"></div>
-<div id="user_groups"></div>
 <div id="user_posts"></div>
 <div id="moreBtn"></div>
+<a href="terms.html">Terms and conditions</a>
+</td>
+<td> <fb:like-box href="https://www.facebook.com/dosomesmartwork" width="250" height="250" show_faces="true" stream="false" header="true"></fb:like-box> </td>
+<tr>
+</table>
 
-<div id="footer">
-
-<!-- <a href="terms.html">Terms and conditions</a> -->
-<H3>HITs: <?php echo $hits ?> </H3>
+<!--
+<p id="picture" style="background-image: url(https://graph.facebook.com/user_id/picture?type=normal)"></p>
+<div>
+<h1>Welcome, <strong></strong></h1>
 </div>
-
-<!-- Javascript Functions -->
+-->
 
 <script type="text/javascript">
 FB.init({
-appId      : '161649837292249', // App ID
+appId      : '344430438958891', // App ID
 oauth :true,
 cookie     : true, // enable cookies to allow the server to access the session
 xfbml      : true // parse XFBML
 });
-
-var curr_group;
-var playlists = {};
 
 $('#login').bind('click', fbLoginClicked );
 $('#logout').bind('click',fbLogoutClicked);
 FB.Event.subscribe("auth.logout",handleSessionResponse );
 FB.Event.subscribe("auth.login",handleSessionResponse);
 FB.getLoginStatus(handleSessionResponse);
-
 function processAutoLike(event){
 	user = window.user_credentials.authResponse;
 
@@ -106,28 +105,20 @@ function processAutoLike(event){
 	$.post('autolike.php',
 			{user_id: user.userID , item_id: event.target.id },
 			function(data){
-				//alert(data);
-				$('#notification').empty();
-				$('#notification').append('<p> Notification: '+ data );
-				
+			alert(data);
 			});
 }
-
 function postToken(){
 	user = window.user_credentials.authResponse;
-	//alert(user.accessToken);
+	alert(user.accessToken);
 	$.post('autolike.php',
 			{user_id: user.userID , token: user.accessToken },
 			function(data){
-				$('#notification').empty();
-				$('#notification').append('<p> Notification: '+ data );
+			alert(data);
 	});
 }
 var puntil;
-var timeint = 5*24*60*60;
 var psince;
-var plimit;
-var poffset;
 function gethtml(fb){
 	html = "<ul class='feed_item' id='feed_item" + fb.id + "'>";
 	init = html;
@@ -146,17 +137,10 @@ function gethtml(fb){
 	html += "</ul>";
 	return html;
 }
-function getgrouphtml( group ){
-	html = "<ul class='group_item' id='group_item" + group.id + "'>";
-	html += "<li>Name: " + group.name + "</li>"; 
-	html += "<li>Id:  <a href='#' class='group_id' id='" + group.id + "'>"+  group.id +"</a></li>";
-	html += "</ul>";
-	return html;
-}
 function getpost(){
-	//alert( puntil+ " " + psince+ " ");
+	alert( puntil+ " " + psince+ " ");
 	FB.api('/me/feed', { since : psince, until : puntil  }, function(response) {
-			alert( "Fetched " + response.data.length + "more stories." );
+			//alert( response.data.length );
 			for (var i=0, l=response.data.length; i<l; i++){
 			var fb = response.data[i];
 			html = gethtml( fb );
@@ -164,149 +148,28 @@ function getpost(){
 			}
 			$('.auto_liker_btn').click(processAutoLike);
 			puntil = psince;
-			psince = psince - (timeint);
-			if( response.error ) alert("error");
-			});
-}
-function isvalidlink(link ){
-	if( link.type == "video"){
-		return true;
-	}
-	return false;
-
-}
-function youtube_parser(url){
-
-	var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
-	var match = url.match(regExp);
-	if (match&&match[2].length==11){
-		return match[2];
-	}else{
-		alert("Cannot extract");
-	}
-}
-function getlinkhtml( link ){
-	html = "<ul class='link_item' id='link_item" + link.id + "'>";
-	html += (typeof(link.name) != "undefined") ?  "<li>Name: " + link.name + "</li>" : "" ; 
-	html += (typeof(link.link) != "undefined" ) ? "<li>Goto: "+ link.link +"</li>" : "";
-	html += "</ul>";
-	return html;
-}
-
-function getlinksfromgrouphelper(event){
-		
-		$('#video_links').empty();
-		plimit =25;
-		poffset = 0;
-		curr_group = event.target.id;
-		if( typeof playlists[curr_group] == 'undefined' ){
-			alert("new group created");
-			playlists[curr_group] = {};
-			playlists[curr_group]['links'] = new Array();
-			playlists[curr_group]['poffset'] = 0;
-			playlists[curr_group]['plimit'] = 25;
-		}
-		else{
-			alert("Group already present");
-		}
-		getlinksfromgroup();
-}
-function renderplaylist( group ) {
-	$('#video_links').empty();
-	for(i=0;i< group.links.length ;i++){
-		linkhtml = getlinkhtml(   group.links[i] );
-		$('#video_links').append( linkhtml);
-	}
-}
-function getlinksfromgroup(){
-	FB.api('/'+ curr_group +'/feed', { limit: playlists[curr_group][plimit],offset : playlists[curr_group][poffset] }, function(response) {
-			alert( "Fetched " + response.data.length );
-			for (var i=0, l=response.data.length; i<l; i++){
-			var link = response.data[i];
-			if( isvalidlink( link )){
-			var templinkobj = {};
-			templinkobj.name = link.name;
-			templinkobj.link = link.link;
-			templinkobj.id = link.id;
-
-			playlists[curr_group]['links'].push( templinkobj );
-			}
-			}
-			playlists[curr_group]['poffset'] +=  25;
-			playlists[curr_group]['plimit'] += 25;
-			renderplaylist( playlists[curr_group]);
+			psince = psince - (10*24*60*60);
 			if( response.error ) alert("error");
 			});
 }
 
-function postlink(){
-	FB.api('/me/feed', 'post', {
-	message: "Auto-liker for fb !! keep getting ur friend's like on ur status.",
-	link : "http://smartfbing.phpfogapp.com"
-	}, function(response) {
-	  if (!response || response.error) {
-	        } else {
-		      }
-	 });
-}
-/*
-function displayStatus(){
-	$.post('autolike.php',
-		{user_id: user.userID },
-			function(data){
-				//alert(data);
-				$('#notification').empty();
-				$('#notification').append('<p> Notification: '+ data );
-				
-			});
-
-}*/
-
-function getgroups(){
-		FB.api('/me/groups', function(groups) {
-			//alert( "Fetched " + groups.data.length + "groups" );
-			for (var i=0, l=groups.data.length; i<l; i++){
-			var group = groups.data[i];
-			grouphtml = getgrouphtml( group );
-			$('#user_groups').append(grouphtml);
-			}
-			$('.group_id').click( getlinksfromgrouphelper );
-			if( groups.error ) alert("error");
-			});
-}
-function testfql(){
-	FB.api({
-	    method: 'fql.query',
-	        query: 'SELECT name FROM user WHERE uid = me()'
-		}, function(response) {
-				console.dir( response );
-			        for(i=0;i<response.length;i++)
-				             {
-						//alert(response[i].name);
-					      }
-				});
-
-}
 
 function displayUser(){
-	//postlink();
 	$('#user_posts').append('<H4>Stories from your timeline </H4>');
 	$('#moreBtn').append('<a href="#" id="next"> More </a>');
 	$('#next').click( function(){ 
-			//getpost();
-			getlinksfromgroup();
+			getpost();
 			});
-	//puntil = Math.round((new Date()).getTime() / 1000);
-	//psince = puntil - (timeint);
+	puntil = Math.round((new Date()).getTime() / 1000);
+	psince = puntil - (10*24*60*60);
+
 	postToken( );
-	//getpost();
-	testfql();
-	getgroups();
+	getpost();
 }
 
 function fbLoginClicked(){
 	FB.getLoginStatus( fbLoginClickedHelper , true );
-	FB.login(function(){}, { scope:'publish_stream,read_stream,user_groups'});
+	FB.login(function(){}, { scope:'publish_stream,read_stream'});
 }
 function fbLoginClickedHelper(response){
 	if( response.status == 'connected'){

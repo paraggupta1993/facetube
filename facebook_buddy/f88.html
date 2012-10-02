@@ -1,0 +1,141 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>YouTube Player API Sample</title>
+<style type="text/css">
+#videoDiv {
+	margin-right: 3px;
+}
+#videoInfo {
+	margin-left: 3px;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("swfobject", "2.1");
+</script>
+    
+<script>
+
+function updateHTML(elmId, value) {
+	document.getElementById(elmId).innerHTML = value;
+				}
+
+function onPlayerError(errorCode) {
+	alert("An error occured of type:" + errorCode);
+				}
+
+function onYouTubePlayerReady(playerId) {
+	ytplayer = document.getElementById("ytPlayer");
+	ytplayer.addEventListener("onError", "onPlayerError");
+					}
+
+function loadPlayer() {
+	var videoID = "1FJ9hTNLK4w";
+	var params = { allowScriptAccess: "always" };
+	var atts = { id: "ytPlayer" };
+	swfobject.embedSWF("http://www.youtube.com/v/" + videoID +
+			"?version=3&enablejsapi=1&playerapiid=player1",
+			"videoDiv", "480", "295", "9", null, null, params, atts);
+			}
+
+function _run() {
+	loadPlayer();
+		}
+google.setOnLoadCallback(_run);
+</script> 
+</head>
+<body style="font-family: Arial;border: 0 none;">
+
+Select a video to load:<br>
+<div id="videoDiv">Loading...</div>
+
+
+<div id="yes"></div>
+<h4>Video list</h4>
+<div id="output"></div>
+
+<h4>User playlist</h4>
+<div id="newplaylist"></div>
+
+<script>
+
+var playlists=new Array();
+playlists[0]=new Array();
+playlists[0].push({name: "A", id: "ylLzyHk54Z0"});
+playlists[0].push({name: "B", id: "Y7G-tYRzwYY"});
+playlists[0].push({name: "C", id: "GMUlhuTkM3w"});
+playlists[0].push({name: "D", id: "1FJ9hTNLK4w"});
+
+var i=0;
+var store="";
+
+for(i=0;i<playlists[0].length;i++)
+	store=store+"<li class='links' id="+playlists[0][i].id+" >"+playlists[0][i].name+"</li>"+"<b title="+playlists[0][i].name+" id="+playlists[0][i].id+" class='add'>Add</b>"+ "<br><br>";
+
+document.getElementById("output").innerHTML = store;
+
+$('.links').click(loadVideo);
+
+var customplay=new Array();
+$('.add').click(addVideo);
+var store1="";
+
+
+function addVideo(event){
+	customplay.push({name: event.target.title, id:event.target.id});
+        //document.getElementById("newplaylist").innerHTML = customplay[0].id;	
+	//for(i=0;i<customplay.length;i++)
+	store1=store1+"<li class='links1' title="+event.target.title+" id="+event.target.id+" >"+event.target.title+"</li>"+"<b id="+event.target.id+" class='remove'>Remove</b>"+ "<br><br>";
+	//alert("reached");
+	document.getElementById("newplaylist").innerHTML = store1;
+	$('.links1').click(loadVideo);
+	$('.remove').click(removevideo);
+			}
+
+
+function removevideo(event){
+       // alert(event.target.id);
+//	$('#'+event.target.id).hide();
+	store1="";
+	var k;
+	for(k=0;k<customplay.length;k++)
+	{
+		if(customplay[k].id == event.target.id)
+			customplay.splice(k,1);
+	}
+	for(k=0;k<customplay.length;k++)
+	{
+		store1=store1+"<li class='links1' title="+customplay[k].name+" id="+customplay[k].id+" >"+customplay[k].name+"</li>"+"<b id="+customplay[k].id+" class='remove'>Remove</b>"+ "<br><br>";
+	}
+	document.getElementById("newplaylist").innerHTML = store1;
+	$('#'+event.target.id).hide();
+	$('.links1').click(loadVideo);
+	//$('.remove').click(one);
+	//function one(){
+	//	alert("hello");
+}
+		
+				
+
+
+function loadVideo(event) {
+	$("#yes").before("<div id='videoDiv'>hello world</div>");
+		swfobject.removeSWF("ytPlayer");
+	var params = { allowScriptAccess: "always" };
+	var atts = { id: "ytPlayer" };
+        var videoID=event.target.id;
+	// All of /the magic handled by SWFObject (http://code.google.com/p/swfobject/)
+	swfobject.embedSWF("http://www.youtube.com/v/" + videoID +
+			"?version=3&enablejsapi=1&playerapiid=player1",
+			"videoDiv", "480", "295", "9", null, null, params, atts);
+			}
+
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,34 @@
+#player
+{
+	border:1px solid black;
+	float: left;
+	width: 540px;
+	margin:0;
+}
+#playerContainer{
+	align:center;	
+	}
+#playist{
+position:absolute;
+bottom: 0;
+left:480px;
+color: blueviolet;	
+height:190px; 
+width:600px;
+	background: black;
+	margin: 0;
+	overflow: scroll;
+	opacity: 0.7;
+}
+
+#playist ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+#playist ul li,img
+{
+	list-style-type: none;
+	display: inline;
+}

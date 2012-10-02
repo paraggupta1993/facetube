@@ -1,0 +1,49 @@
+#left-bar
+{
+	opacity: 1;
+	border: 3px;
+	height: 370px;
+	float: left;
+	width: 400px;
+	padding: 0;
+	margin: 0 20px;
+	display: inline;
+}
+
+#left-bar ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+#left-bar ul li
+{
+	margin: 0 0 1em;
+	padding: 0;
+	list-style-type: none;
+}
+#group {
+	width: 80px;
+	padding: 0;
+	cursor: pointer;
+	-moz-transition-property: background;
+	-moz-transition-duration: 1.3s;
+	-moz-transition-timing-function: ease-in-out;
+	-moz-transition-delay: 0.3s;
+}
+
+#group:hover {
+	background: #CB7D20;
+}
+
+#videoslist{
+	display: none;
+	/*-moz-transition-property: display;
+	-moz-transition-duration: 1.3s;
+	-moz-transition-timing-function: ease-in-out;
+	-moz-transition-delay: 0.3s;*/
+	}
+
+#group:hover #videoslist{
+	display: inline;
+	} 

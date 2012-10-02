@@ -1,0 +1,171 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>YouTube Player API Sample</title>
+<style type="text/css">
+#videoDiv {
+	margin-right: 3px;
+}
+#videoInfo {
+	margin-left: 3px;
+}
+</style>
+
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("swfobject", "2.1");
+</script>
+<script>
+var global1=0;
+	var gflag=0;
+	var flag2=0;
+      function loadVideo(event) {
+	gflag=0;
+	flag2=0;
+	for(k=0;k<customplay.length;k++)
+		if(customplay[k].id==event.target.id)
+			{
+			flag2=1;
+			global1=k;
+			alert("global="+global1);
+			}
+	var videoID=event.target.id;        
+        if(ytplayer) {
+          ytplayer.loadVideoById(videoID);
+        }
+      }
+      
+      // This function is called when an error is thrown by the player
+      function onPlayerError(errorCode) {
+        alert("An error occured of type:" + errorCode);
+      }
+	
+      function updatePlayerInfo() {
+          //updateHTML("videoDuration", ytplayer.getDuration());
+	if(ytplayer.getCurrentTime() == ytplayer.getDuration())
+		{
+		alert(global1);
+	//	if (gflag==0)
+	//	{
+	//	alert("hi");
+		//var x=customplay[global].id;
+		//if(flag2==1){
+		global1=global1+1;
+		if(global1==customplay.length)
+			global1=0;	
+		var x=customplay[global1].id;
+		//global1=global1+1;
+		//alert("hi");
+		flag2=1;
+		//gflag=0;
+                ytplayer.loadVideoById(x);
+		//global1=global1+1;
+		//}
+		}
+		//gflag=gflag+1;			
+		
+	//	}
+      }
+      
+      // This function is automatically called by the player once it loads
+      function onYouTubePlayerReady(playerId) {	
+	gflag=0;
+	setInterval(updatePlayerInfo, 2000);
+        ytplayer = document.getElementById("ytPlayer");
+        ytplayer.addEventListener("onError", "onPlayerError");
+      }
+      
+      // The "main method" of this sample. Called when someone clicks "Run".
+      function loadPlayer() {
+	gflag=0;
+        // The video to load
+        var videoID = "ylLzyHk54Z0";
+        // Lets Flash from another domain call JavaScript
+        var params = { allowScriptAccess: "always" };
+        // The element id of the Flash embed
+        var atts = { id: "ytPlayer" };
+        // All of the magic handled by SWFObject (http://code.google.com/p/swfobject/)
+        swfobject.embedSWF("http://www.youtube.com/v/" + videoID +
+                           "?version=3&enablejsapi=1&playerapiid=player1&autoplay=0",
+                           "videoDiv", "480", "295", "9", null, null, params, atts);
+      }
+      function _run() {
+        loadPlayer();
+      }
+      google.setOnLoadCallback(_run);
+
+
+
+
+
+
+
+
+
+</script> 
+</head>
+<body style="font-family: Arial;border: 0 none;">
+
+Select a video to load:<br>
+<div id="videoDiv">Loading...</div>
+
+
+<div id="yes"></div>
+<h4>Video list</h4>
+<div id="output"></div>
+
+<h4>User playlist</h4>
+<div id="newplaylist"></div>
+<div id="related1"></div>
+<script>
+
+
+var playlists=new Array();
+playlists[0]=new Array();
+playlists[0].push({name: "A", id: "ylLzyHk54Z0"});
+playlists[0].push({name: "B", id: "Y7G-tYRzwYY"});
+playlists[0].push({name: "C", id: "GMUlhuTkM3w"});
+playlists[0].push({name: "D", id: "1FJ9hTNLK4w"});
+
+var i=0;
+var store="";
+
+for(i=0;i<playlists[0].length;i++)
+	store=store+"<li class='links' id="+playlists[0][i].id+" >"+playlists[0][i].name+"</li>"+"<b title="+playlists[0][i].name+" id="+playlists[0][i].id+" class='add'>Add</b>"+ "<br><br>";
+
+document.getElementById("output").innerHTML = store;
+
+$('.links').click(loadVideo);
+
+var customplay=new Array();
+$('.add').click(addVideo);
+var store1="";
+
+
+function addVideo(event){
+	var k;
+	for(k=0;k<customplay.length;k++)
+		if(customplay[k].id==event.target.id)
+			{
+			alert("video already there");
+			return;
+			}
+			//alert("hello");
+	customplay.push({name: event.target.title, id:event.target.id});
+        //document.getElementById("newplaylist").innerHTML = customplay[0].id;	
+	//for(i=0;i<customplay.length;i++)
+	store1=store1+"<li class='links1' title="+event.target.title+" id="+event.target.id+" >"+event.target.title+"</li>"+"<b id="+event.target.id+" class='remove'>Remove</b>"+ "<br><br>";
+	//alert("reached");
+	document.getElementById("newplaylist").innerHTML = store1;
+	$('.links1').click(loadVideo);
+	//$('.remove').click(removevideo);
+			}
+				
+
+
+</script>
+</body>
+</html>
+

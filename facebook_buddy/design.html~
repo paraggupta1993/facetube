@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>fACEtubE</title>
+<script type="text/javascript" src="search_script.js"></script>
+<script type="text/javascript" src="design.js"></script>
+<script type="text/javascript" src="http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js"></script>
+<link rel="stylesheet" type="text/css" href="design.css"> </link>
+<link rel="stylesheet" type="text/css" href="design2.css"></link>
+</head>
+<body onload="draw();">
+<canvas id="canvas"> canvas element </canvas>
+<div id="container">
+<div id="header">
+	<h1>pOkERfACE..yeah ! </h1>
+</div>
+<div id="navigation">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Download</a></li>
+			<li><a href="#">Contact us</a></li>
+		</ul>
+</div>
+<div id="content-container"></div>
+	<div id="left-bar">
+		<ul>
+			<li>group1 </li>
+			<li>group2 </li>
+			<li>group3 </li>
+		</ul>
+	</div>
+
+	<div id="player">
+		<h2>Youtube pLAYer</h2>
+		<div id="playerContainer" style="width: 20em; height: 180px; float: left;">
+   	 <object id="player"></object>
+</div>
+	</div>	
+	
+	<div id="right-bar">
+		<h3>search results for the playing video</h3>
+		<div id="videos"></div>
+		<script type="text/javascript" src="http://gdata.youtube.com/feeds/api/videos/PqFMFVcCZgI/related?alt=json-in-script&format=5&callback=showMyVideos">
+		</script>	
+	</div>	
+
+</div>
+
+</div>
+
+</body>
+</html>

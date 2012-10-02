@@ -1,0 +1,25 @@
+canvas {
+min-width:100%;
+min-height:100%;
+position:fixed;
+z-index:-2;
+left:0;
+top:0;
+opacity:0.7;
+border:2px solid black;
+background:url(back5.jpg);
+}
+
+
+html {
+scrollbar-base-color: #9999cc;
+scrollbar-arrow-color: white;
+scrollbar-track-color: #ccccff;
+
+scrollbar-shadow-color: black;
+scrollbar-lightshadow-color: black;
+scrollbar-darkshadow-color: gray;
+
+scrollbar-highlight-color: white;
+scrollbar-3dlight-color: black;
+}
